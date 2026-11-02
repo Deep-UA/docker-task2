@@ -4,12 +4,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Generate a token
-        id: generate-token
-        uses: actions/create-github-app-token@v2
-        with:
-          app-id: ${{ secrets.APP_ID }}
-          private-key: ${{ secrets.APP_PRIVATE_KEY }}
       - uses: actions/checkout@v6
       - name: Build the stack
         run: docker compose up -d
@@ -25,7 +19,4 @@ jobs:
         with:
           working-directory: ./.github/tests
       - name: Final Step
-        env:
-          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
-        run: |
-          gh repo edit $GITHUB_REPOSITORY --visibility private --accept-visibility-change-consequences  
+        run: echo 'All good'
